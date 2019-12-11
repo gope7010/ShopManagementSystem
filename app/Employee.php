@@ -1,21 +1,15 @@
 <?php
 
-    namespace App;
+namespace App;
 
-    use Illuminate\Notifications\Notifiable;
-    use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-    class Writer extends Authenticatable
-    {
-        use Notifiable;
 
-        protected $guard = 'employee';
+class Employee extends Authenticatable
+{
+     use Notifiable;
 
-        protected $fillable = [
-            'name', 'email', 'password',
-        ];
-
-        protected $hidden = [
-            'password', 'remember_token',
-        ];
-    }
+    protected $fillable = ['firstname','lastname', 'description', 'phone'];
+}

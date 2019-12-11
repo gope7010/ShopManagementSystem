@@ -1,14 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-    use App\User;
-    use App\Admin;
-    use App\Writer;
-    use App\Http\Controllers\Controller;
-    use Illuminate\Support\Facades\Hash;
-    use Illuminate\Support\Facades\Validator;
-    use Illuminate\Foundation\Auth\RegistersUsers;
-    use Illuminate\Http\Request;
+
+use App\User;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -40,8 +37,6 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        $this->middleware('guest:admin');
-        $this->middleware('guest:employee');
     }
 
     /**
@@ -53,9 +48,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
         ]);
     }
 
@@ -63,7 +58,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return User
      */
     protected function create(array $data)
     {
@@ -73,36 +68,4 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-    protected function createAdmin(Request $request)
-    {
-        $this->validator($request->all())->validate();
-        $admin = Admin::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
-        return redirect()->intended('login/admin');
-    }
-    protected function createEmployee(Request $request)
-    {
-        $this->validator($request->all())->validate();
-        $employee = Employee::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
-        return redirect()->intended('login/employee');
-    }
-
-    public function showAdminRegisterForm()
-    {
-        return view('auth.register', ['url' => 'admin']);
-    }
-
-    public function showEmployeeRegisterForm()
-    {
-        return view('auth.register', ['url' => 'employee']);
-    }
-
-
 }
