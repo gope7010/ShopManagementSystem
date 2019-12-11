@@ -2,12 +2,12 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Employee;
-    class EmployeeController extends Controller
+    class EmployeeController extends AdminController
     {
 
-         public function __construct()
+      public function __construct()
     {
-      $this->middleware('guest:admin');
+        $this->middleware('auth:admin');
     }
         /**
          * Display a listing of the resource.

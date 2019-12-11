@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-sm-8 offset-sm-2">
           <form action="{{route('employees.update')}}" method = "post">
-            @csrf
+            {{ csrf_field() }}
             <div class="form-group">
               <label for="firstname">Firstname:</label>
               <input type="text" name = "firstname" id = "firstname" class="form-control" required value = "{{$employee->firstname}}">
